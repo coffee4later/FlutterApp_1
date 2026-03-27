@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/firebase/email_auth.dart';
 import 'package:lottie/lottie.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,12 +10,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  
   bool isLoading = false;
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final EmailAuth emailAuth = EmailAuth();
 
   @override
   Widget build(BuildContext context) {
     final txtUser = TextField(
+      controller: _emailController,
       decoration: InputDecoration(
         labelText: 'Usuario',
         border: OutlineInputBorder(),
@@ -22,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     final txtPwd = TextField(
+      controller: _passwordController,
       obscureText: true,
       decoration: InputDecoration(
         labelText: 'Contraseña',
@@ -30,23 +36,54 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     final btnLogin = InkWell(
-      onTap: () {
-        isLoading = true;
-        setState(() {});
-        Future.delayed(Duration(seconds:4), () {
-          print('Login animation completed');
-          Navigator.pushNamed(context, "/dashboard");
-        });
+      onTap: () async {
+        setState(() => isLoading = true);
+
+        try {
+          final user = await emailAuth.signIn(
+            _emailController.text.trim(),
+            _passwordController.text,
+          );
+
+          if (user != null) {
+            Navigator.pushReplacementNamed(context, "/dashboard");
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Error al iniciar sesión. Verifica tus credenciales y asegúrate de haber verificado tu correo electrónico.'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error al iniciar sesión: ${e.toString()}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        } finally {
+          setState(() => isLoading = false);
+        }
+
         print('Login button tapped');
-        
       },
       child: Lottie.asset('assets/submit-button.json', width: 55, height: 55),
     );
 
-    final imgLoading = isLoading ? Positioned(
-      top:350,
-      child: Image.asset('assets/loading.gif', width: 35, height: 35)
-      ) : Container();
+    final btnSignup = TextButton(
+      onPressed: () {
+        Navigator.pushNamed(context, "/signup");
+      },
+      child: Text('¿No tienes cuenta? Regístrate'),
+    );
+
+    final imgLoading = isLoading
+        ? Positioned(
+            top: 350,
+            child: Image.asset('assets/loading.gif', width: 35, height: 35),
+          )
+        : Container();
 
     return Scaffold(
       body: Container(
@@ -89,12 +126,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     txtPwd,
                     Divider(color: Colors.blueAccent, thickness: 3, height: 16),
                     btnLogin,
-                    
+                    btnSignup,
                   ],
                 ),
               ),
             ),
-            imgLoading
+            imgLoading,
           ],
         ),
       ),

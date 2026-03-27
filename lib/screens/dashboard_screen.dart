@@ -1,6 +1,6 @@
-import 'dart:math';
+
 import 'package:flutter_application_1/listeners/value_listener.dart';
-import 'package:flutter_application_1/utils/themeapp.dart';
+
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       
       appBar: AppBar(
         title: Text('Dashboard', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
-        backgroundColor: ThemeApp.WarmTheme().colorScheme.surface,
+        // backgroundColor: ThemeApp.WarmTheme().colorScheme.surface,
       ),
       body: Center(
         child: Text(
@@ -35,6 +35,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
         currentIndex: _currentIndex,
         onTap: (i) { 
           setState(() => _currentIndex = i);
+          switch(i){
+            case 0:
+              Navigator.pushNamed(context, '/dashboard');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/castList');
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/profesores');
+          }
           if (i==3){
             ValueListener.isDarkMode.value = !ValueListener.isDarkMode.value;
           }
@@ -50,14 +60,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           /// Likes
           SalomonBottomBarItem(
             icon: Icon(Icons.favorite_border),
-            title: Text("Likes"),
+            title: Text("Cast List"),
             selectedColor: Colors.pink,
           ),
 
           /// Search
           SalomonBottomBarItem(
-            icon: Icon(Icons.search),
-            title: Text("Search"),
+            icon: Icon(Icons.person_outline),
+            title: Text("Profesores"),
             selectedColor: Colors.orange,
           ),
 

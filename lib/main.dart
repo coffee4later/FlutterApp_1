@@ -1,10 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_application_1/screens/professors_screen.dart';
+import 'firebase_options.dart';
+import 'package:flutter_application_1/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/listeners/value_listener.dart';
+import 'package:flutter_application_1/screens/castList_screen.dart';
 import 'package:flutter_application_1/screens/dashboard_screen.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/utils/themeapp.dart';
 
-void main() => runApp(MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   MyApp({super.key});
@@ -27,8 +38,11 @@ class _MyAppState extends State<MyApp> {
           routes: {
             '/login': (context) => LoginScreen(),
             '/dashboard': (context) => DashboardScreen(),
+            '/castList':(context) => CastlistScreen(),
+            '/signup':(context) => SignUpScreen(),
+            '/profesores':(context) => ProfessorsScreen(),
           },
-          theme: isDarkMode ? ThemeApp.WarmTheme() : ThemeData.light(),
+          theme: isDarkMode ? ThemeApp.warmTheme() : ThemeData.light(),
         );
       }
     );

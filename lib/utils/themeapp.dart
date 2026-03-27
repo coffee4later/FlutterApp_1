@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeApp {
-  static ThemeData WarmTheme() {
+  static ThemeData warmTheme() {
     final theme = ThemeData.dark().copyWith(
       colorScheme: const ColorScheme(
         brightness: Brightness.dark,
