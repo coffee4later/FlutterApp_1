@@ -23,7 +23,7 @@ class _ProfessorsScreenState extends State<ProfessorsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Row(
-          spacing:25.0,
+          spacing: 25.0,
           children: [
             const Text('Profesores'),
             IconButton(onPressed: showAlert, icon: Icon(Icons.add)),
@@ -76,7 +76,10 @@ class _ProfessorsScreenState extends State<ProfessorsScreen> {
                       // mainAxisAlignment:  ,
                       children: [
                         IconButton(
-                          onPressed: () => showAlert(id: id),
+                          onPressed: () {
+                            showAlert(id: id);
+                            
+                          },
                           icon: Icon(Icons.edit),
                         ),
                         IconButton(
@@ -160,6 +163,7 @@ class _ProfessorsScreenState extends State<ProfessorsScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("Actor added successfully")),
                       );
+                      Navigator.pop(context);
                     } else {
                       print("Failed to add actor");
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -177,15 +181,19 @@ class _ProfessorsScreenState extends State<ProfessorsScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("Actor updated successfully")),
                       );
+                      Navigator.pop(context);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text("Failed to update actor")),
                       );
+                      Navigator.pop(context);
                     }
                   });
                 }
               },
-              child: Text("Add actor"),
+              child: id == null
+                  ? Text("Add Professor")
+                  : Text("Update professor"),
             ),
           ],
         ),
