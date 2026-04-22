@@ -5,11 +5,16 @@ import 'package:dio/dio.dart';
 
 class ApiCatholic {
 
-  final Dio dio = Dio();
+  final Dio dio = Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+    ),
+  );
 
   Future<List<SeriesDao>> getSeries(int id) async {
     final response = await dio.get(
-      AppStrings().apiUrlBase + "json/categories/$id.json",
+      AppStrings().apiUrlBase + "/json/categories/$id.json",
     );
 
     final res = response.data['series'] as List;

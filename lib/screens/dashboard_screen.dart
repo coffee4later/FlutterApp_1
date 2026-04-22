@@ -44,8 +44,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               break;
             case 2:
               Navigator.pushNamed(context, '/profesores');
+              break;
+            case 3:
+              Navigator.pushNamed(context, '/series');
+              break;
           }
-          if (i==3){
+          if (i==4){
             ValueListener.isDarkMode.value = !ValueListener.isDarkMode.value;
           }
         },
@@ -69,6 +73,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon: Icon(Icons.person_outline),
             title: Text("Profesores"),
             selectedColor: Colors.orange,
+          ),
+
+          SalomonBottomBarItem(
+            icon: Icon(Icons.book_outlined),
+            title: Text("Series"),
+            selectedColor: const Color.fromARGB(255, 13, 255, 0),
           ),
 
           /// Profile

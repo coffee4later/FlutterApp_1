@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_application_1/screens/professors_screen.dart';
+import 'package:flutter_application_1/screens/series_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter_application_1/screens/signup.dart';
 import 'package:flutter/material.dart';
@@ -34,13 +35,14 @@ class _MyAppState extends State<MyApp> {
       builder: (context, isDarkMode, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: LoginScreen(),
+          home: DashboardScreen(),
           routes: {
             '/login': (context) => LoginScreen(),
             '/dashboard': (context) => DashboardScreen(),
             '/castList':(context) => CastlistScreen(),
             '/signup':(context) => SignUpScreen(),
             '/profesores':(context) => ProfessorsScreen(),
+            '/series':(context) => SeriesScreen(),
           },
           theme: isDarkMode ? ThemeApp.warmTheme() : ThemeData.light(),
         );
